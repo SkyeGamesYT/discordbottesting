@@ -6,6 +6,7 @@ from discord.ext import commands
 import sqlite3
 from key_generator.key_generator import generate
 import discord
+from keep_alive import keep_alive
 
 
 connection = sqlite3.connect("database.db")
@@ -227,6 +228,6 @@ async def unmute_error(ctx, error):
 
 
 
-#keep_alive.keep_alive()
+keep_alive.keep_alive()
 client.run( ${{ secrets.TOKEN }} )
 connection.close()
