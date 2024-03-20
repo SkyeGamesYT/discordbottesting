@@ -1,5 +1,12 @@
-import discord
+import asyncio
+import datetime
+import pytz
+import requests
 from discord.ext import commands
+import sqlite3
+from key_generator.key_generator import generate
+import discord
+
 
 connection = sqlite3.connect("database.db")
 print(connection.total_changes)
@@ -221,5 +228,5 @@ async def unmute_error(ctx, error):
 
 
 #keep_alive.keep_alive()
-client.run(os.getenv("TOKEN"))
+client.run( ${{ secrets.TOKEN }} )
 connection.close()
