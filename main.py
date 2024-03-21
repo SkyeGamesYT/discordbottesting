@@ -6,7 +6,6 @@ from discord.ext import commands
 import sqlite3
 from key_generator.key_generator import generate
 import discord
-from keep_alive import keep_alive
 
 
 connection = sqlite3.connect("database.db")
