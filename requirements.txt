@@ -1,0 +1,7 @@
+discord
+flask
+datetime
+key-generator
+requests
+pytz
+asyncio
