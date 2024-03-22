@@ -8,6 +8,7 @@ from key_generator.key_generator import generate
 import discord
 from flask import Flask
 from threading import Thread
+from afks import _afks
 
 app = Flask('')
 
@@ -78,6 +79,38 @@ async def ban(ctx, member: discord.Member, *, reason = None):
 async def echo(ctx, *,args):
     if ctx.author.id >= 0:
         await ctx.send(args)
+
+
+@client.command()
+async def afk(ctx, reason = "No reason provided"):
+    member = ctx.author
+    if member = ctx.guild.owner:
+        return #Owner's name cannot be changed by a bot
+    if member.id in _afks:
+        _afk.remove(member.id)
+        embed = discord.Embed(title="No longer AFK", description = f"Note: {member.name} is no longer AFK!")
+        ctx.send(embed=embed)
+        member.edit(nick=f"{member.display_name}")
+    else:
+        _afks.append(member.id)
+        member.edit(nick=f"(AFK) {member.display_name}")
+        embed = discord.Embed(title="User AFK", description=f"{member.name} is now AFK.")
+        embed.set_image(url = member.avatar_url)
+        embed.add_field(description=f"{member.name} is AFK : {reason}")
+        ctx.send(embed=embed)
+
+
+@client.event
+async def on_message(message):
+    if message.author.bot:
+        return
+    for mention in message.mention:
+        if mention.id in _afks:
+            member = await discord.fetch_user(mention.id)
+            embed = discord.Embed(title="User AFK", description=f"{member} is AFK.")
+            ctx.send(embed=embed)
+    await client.process_commands(message)
+    
 
 
 
