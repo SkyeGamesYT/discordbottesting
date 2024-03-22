@@ -1,7 +1,4 @@
-import asyncio
-import datetime
-import pytz
-import requests
+
 from discord.ext import commands
 import sqlite3
 from key_generator.key_generator import generate
@@ -9,6 +6,7 @@ import discord
 from flask import Flask
 from threading import Thread
 from afks import _afks
+import os
 
 app = Flask('')
 
@@ -84,7 +82,7 @@ async def echo(ctx, *,args):
 @client.command()
 async def afk(ctx, reason = "No reason provided"):
     member = ctx.author
-    if member = ctx.guild.owner:
+    if member == ctx.guild.owner:
         return #Owner's name cannot be changed by a bot
     if member.id in _afks:
         _afk.remove(member.id)
@@ -177,7 +175,7 @@ async def warn(ctx, id: int, reason=None):
   print(warnid)
   cursor.execute("INSERT INTO warningsdatabase2 VALUES (?, ?, ?, ?)", (id, moderator, reason, warnid))
   conn.commit()
-  embedVar = discord.Embed(title="User Warned", description=f"{member} has been warned by {moderator} for {reason}", color=)
+  embedVar = discord.Embed(title="User Warned", description=f"{member} has been warned by {moderator} for {reason}",)
   await ctx.send(embed=embedVar)
   
   
@@ -279,5 +277,5 @@ async def unmute_error(ctx, error):
 
 
 keep_alive.keep_alive()
-client.run( ${{ secrets.TOKEN }} )
+client.run(os.enviorn(TOKEN))
 connection.close()
